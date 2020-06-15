@@ -29,7 +29,7 @@ def _go_command(ctx):
     "GOOS="+ctx.attr.os,
     "GOARCH="+ctx.attr.arch,
     #"GOROOT_FINAL=/go",
-    "GO111MODULE=on",
+    "GO111MODULE=auto",
     "GOCACHE=${TMPDIR}/gocache"
   ]
 
@@ -41,9 +41,7 @@ def _go_command(ctx):
   if ctx.attr.arm:
     envs+=["GOARM="+ctx.attr.arm]
 
-  switchToPwd="cd ${SPWD} && "
-
-  command = switchToPwd + " ".join(envs) + " " + command
+  command = " ".join(envs) + " " + command
 
   ctx.actions.run_shell(
     outputs = [output_file],
